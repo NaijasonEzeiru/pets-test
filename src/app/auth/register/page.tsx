@@ -40,7 +40,7 @@ const Register = () => {
     fullName,
     phone
   }: RegisterSchemaType) => {
-    const res = await fetch(`${apiAddress}/register`, {
+    const res = await fetch(`${apiAddress}/api/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
