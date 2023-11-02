@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-bg-color: #fff;
+    --secondary-bg-color: #e9d5ff;
+    --primary-text-color: #000;
+    --primary-cta-color: #7e22ce;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary-bg-color: #121212;
+      --secondary-bg-color: #18191b;
+      --primary-text-color: #fff;
+      --primary-cta-color: #8b5cf6;
+    }
+  }
+}
+
+@layer utilities {
+  @variants responsive {
+    /* resize scrollbar for chrome, Safari and Opera  */
+    .no-scrollbar::-webkit-scrollbar {
+      /* display: none; */
+      width: 5px;
+      height: 5px;
+      /* background: red; */
+    }
+
+    /* style scrollbar hanlde for chrome, Safari and Opera  */
+    .no-scrollbar::-webkit-scrollbar-thumb {
+      background: rgb(100 116 139);
+      border-radius: 12px;
+    }
+
+    /* resize scrollbar for firefox, IE and Edge  */
+    .no-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: rgb(100 116 139) transaprent;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply m-auto flex items-center bg-ctaColor gap-1 py-2 px-5 rounded-lg shadow-md text-white justify-center hover:scale-105 disabled:bg-slate-400 dark:disabled:bg-slate-800 disabled:text-primaryBg;
+  }
+  /* .line-input { @apply w-full focus-visible:outline-0 border-b-2 border-gray-400 focus-visible:border-b-[1px] focus-visible:border-solid focus-visible:border-goldColor bg-transparent} */
+  .line-input {
+    @apply w-full border-b-2 border-slate-500 bg-transparent;
+  }
+  .PhoneInputInput {
+    @apply w-full focus-visible:outline-0 border-b-2 border-gray-400 pr-7 focus-visible:border-b-[1px] focus-visible:border-solid focus-visible:border-orange-500 bg-transparent;
+  }
+  .PhoneInputCountrySelect {
+    @apply bg-primaryBg text-primaryText;
+  }
+}
+
+@media (min-width: 1020px) {
+  .grd {
+    background: linear-gradient(
+      215deg,
+      #e9d5ff88 0%,
+      #00043c 74%,
+      /* rgba(123, 99, 74, 0.75) 67.96%, */ #00043c 98.43%
+    );
+  }
+}
+
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #fff;
+  box-shadow: inset 0 0 20px 20px white;
+  transition: background-color 5000s ease-in-out 0s;
+} */
+
+.gar {
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+.grd {
+  background-image: linear-gradient(
+    90deg,
+    rgba(233, 237, 241, 0) 35%,
+    rgb(161, 165, 190)
+  );
+}
+
+/* .PhoneInputInput {
+  background-color: red;
+} */
+
+.gtc {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}
