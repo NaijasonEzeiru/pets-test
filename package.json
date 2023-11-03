@@ -31,6 +31,7 @@
     "react-icons": "^4.11.0",
     "react-phone-number-input": "^3.3.7",
     "swr": "^2.2.4",
+    "validator": "^13.11.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/validator": "^13.11.5",
     "autoprefixer": "latest",
     "drizzle-kit": "^0.19.13",
     "eslint": "latest",

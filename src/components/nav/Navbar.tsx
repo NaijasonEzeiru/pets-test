@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Dropdown from './DropDown';
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
   const [ham, setHam] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [query, setQuery] = useState('');
   const session: any = useSession();
-
-  console.log(session);
+  const router = useRouter();
 
   return (
     <header
@@ -98,7 +99,14 @@ const NavBar = () => {
             type='search'
             placeholder='Search'
             id='search'
-            className='rounded-lg md:w-32 w-full py-2 px-5 border border-ctaColor focus-within:w-full'
+            className='rounded-lg md:w-32 w-full py-2 px-5 border border-ctaColor focus-within:w-full text-black'
+            value={query}
+            onKeyDown={(e) => {
+              e.key === 'Enter' && router.push(`/pet?q=${query}`);
+            }}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
           />
         </search>
       </nav>

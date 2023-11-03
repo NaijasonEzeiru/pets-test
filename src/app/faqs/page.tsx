@@ -2,7 +2,7 @@ import { HeaderAndTextAccordions } from '@/components/helpers/Accordions';
 
 const FAQs = () => {
   return (
-    <main className='flex gap-11 flex-col mb-16'>
+    <main className='min-h-[calc(100vh-30rem)] md:min-h-[calc(100vh-15rem)]flex gap-11 flex-col mb-16'>
       <header className='m-auto py-8 bg-secondaryBg pt-28 w-full md:px-16 px-3'>
         <h1 className='text-2xl font-semibold mb-4 text-center mx-3 md:mx-16 lg:mx-32'>
           Frequently Asked Questions

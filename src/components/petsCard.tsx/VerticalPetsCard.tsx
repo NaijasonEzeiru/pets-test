@@ -16,7 +16,7 @@ const VerticalProductCard = ({
   return (
     <Link
       href={`/pet/${id}`}
-      className='shadow-md dark:shadow-[#8b5cf6] dark:shadow-sm rounded-md'>
+      className='shadow-md dark:shadow-[#8b5cf6] dark:shadow-sm rounded-md h-60 border'>
       <div className='relative h-36'>
         <Image
           src={img}
@@ -30,7 +30,7 @@ const VerticalProductCard = ({
           priority
         />
       </div>
-      <div className='h-[92px] bg-secondaryBg w-full flex flex-col px-2 justify-center gap-[1px] rounded-b-md'>
+      <div className='h-24 bg-secondaryBg w-full flex flex-col px-2 justify-center gap-1 rounded-b-md'>
         <h5 className='line-clamp-2'>{productName}</h5>
         <p className='font-light text-xs'>{location}</p>
       </div>

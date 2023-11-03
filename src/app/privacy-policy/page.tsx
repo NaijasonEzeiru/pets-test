@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const TandC = () => {
   return (
-    <main className='flex gap-4 flex-col '>
+    <main className='min-h-[calc(100vh-30rem)] md:min-h-[calc(100vh-15rem)]flex gap-4 flex-col '>
       <header className='m-auto py-8 bg-secondaryBg pt-28 w-full md:px-16 px-3'>
         <h1 className='text-2xl font-semibold mb-2 text-center'>
           Privacy Policy for PetMatchup

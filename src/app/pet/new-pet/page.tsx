@@ -170,7 +170,7 @@ const AddPets = () => {
         )}
 
         <SelectInput
-          items={['Yes', 'No']}
+          items={['Purebred', 'Mixed']}
           errors={errors.purebred?.message}
           fields={fields?.purebred?.length > 0}
           placeholder='Purebred?'

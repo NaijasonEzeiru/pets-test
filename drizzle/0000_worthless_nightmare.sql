@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS "account" (
 	"userId" text NOT NULL,
 	"type" text NOT NULL,
+	"provider" text NOT NULL,
 	"provider_account_id" text NOT NULL,
 	"refresh_token" text,
 	"access_token" text,
@@ -9,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "account" (
 	"scope" text,
 	"id_token" text,
 	"session_state" text,
-	CONSTRAINT account_type_provider_account_id PRIMARY KEY("type","provider_account_id")
+	CONSTRAINT account_provider_provider_account_id PRIMARY KEY("provider","provider_account_id")
 );
 
 CREATE TABLE IF NOT EXISTS "category" (

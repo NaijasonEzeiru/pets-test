@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "8d657fe1-006a-4919-bdb2-79671407abf5",
+  "id": "b5864d5b-b6c3-4228-a4be-dc8dcc129c98",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -16,6 +16,12 @@
         },
         "type": {
           "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -86,10 +92,10 @@
         }
       },
       "compositePrimaryKeys": {
-        "account_type_provider_account_id": {
-          "name": "account_type_provider_account_id",
+        "account_provider_provider_account_id": {
+          "name": "account_provider_provider_account_id",
           "columns": [
-            "type",
+            "provider",
             "provider_account_id"
           ]
         }

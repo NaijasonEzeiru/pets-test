@@ -2,11 +2,28 @@ import { NextResponse } from 'next/server';
 import { PetSchema } from '@/utils/schemas';
 import { db } from '@/db/db';
 import { pets, users, categories } from '@/db/schema/schema';
-import { eq } from 'drizzle-orm';
+import { eq, ilike, or } from 'drizzle-orm';
 
-export const GET = async () => {
+export const GET = async ({
+  nextUrl
+}: {
+  nextUrl: { searchParams: { get: (w: string) => string } };
+}) => {
+  const q = nextUrl.searchParams.get('q');
+  console.log({ q });
   try {
-    const allPets = await db.query.pets.findMany({ limit: 60 });
+    const allPets = !q
+      ? await db.query.pets.findMany({ limit: 60 })
+      : await db.query.pets.findMany({
+          where: or(
+            ilike(pets.breed, `%${q}%`),
+            ilike(pets.purebred, `%${q}%`),
+            ilike(pets.age, `%${q}%`),
+            ilike(pets.gender, `%${q}%`),
+            ilike(pets.category, `%${q}%`)
+          ),
+          limit: 60
+        });
     if (!allPets)
       return new NextResponse(JSON.stringify({ message: 'No pet found' }), {
         status: 400

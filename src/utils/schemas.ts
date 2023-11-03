@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import validator from 'validator';
 
 const MAX_FILE_SIZE = 500000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -30,9 +31,7 @@ export const RegisterSchema = z
       .string()
       .email({ message: 'Please input a valid email address' })
       .max(40, { message: 'Must contain at most 40 characters' }),
-    phone: z.string(),
-    // .min(11, { message: 'must be a valid phone number' })
-    // .max(11, { message: 'must be a valid phone number' }),
+    phone: z.string().refine(validator.isMobilePhone),
     password: z
       .string()
       .min(4, { message: 'Must contain at least 4 characters' })
@@ -69,9 +68,7 @@ export const RegisterSchemaApi = z.object({
     .string()
     .email({ message: 'Please input a valid email address' })
     .max(40, { message: 'Must contain at most 40 characters' }),
-  phone: z.string(),
-  // .min(11, { message: 'must be a valid phone number' })
-  // .max(11, { message: 'must be a valid phone number' }),
+  phone: z.string().refine(validator.isMobilePhone),
   password: z
     .string()
     .min(4, { message: 'Must contain at least 4 characters' })
@@ -187,7 +184,7 @@ export const FilterPetSchema = z.object({
   country: z.string().max(20, { message: 'Invalid input' }).optional(),
   state: z.coerce.number().max(36, { message: 'Invalid input' }).optional(),
   breed: z.string().max(30, { message: 'Too long' }).optional(),
-  purebred: z.enum(['No', 'Yes']).optional(),
+  purebred: z.enum(['Mixed', 'Purebred']).optional(),
   // age: z
   //   .string()
   //   .min(2, { message: 'Select the age' })

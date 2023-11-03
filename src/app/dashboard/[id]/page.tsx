@@ -26,7 +26,7 @@ const Profile = async ({ params }: { params: { id: string } }) => {
       <div className='py-16 px-3 md:px-14 lg:px-32 flex flex-col gap-3'>
         <div className='min-h-[75vh] bg-secondaryBg rounded-lg shadow-md text-primaryText py-12 my-8 px-3 m-3 flex gap-11 flex-col md:mx-14 md:px-16 lg:mx-32 justify-center'>
           <div className='flex flex-col gap-3'>
-            {/* TODO: Tips on hiw to get an effective add */}
+            {/* TODO: Tips on how to get an effective add */}
             <div className='flex gap-2 flex-col items-center justify-center mb-9'>
               <div className='w-28 h-28 rounded-full border-solid border-2 border-secondary shadow-lg bg-primaryBg flex items-center justify-center'>
                 {me?.image ? (
@@ -59,7 +59,7 @@ const Profile = async ({ params }: { params: { id: string } }) => {
             <Link
               href={`/dashboard/${me.id}/pets`}
               className='w-full p-3 bg-primaryBg rounded-lg hover:bg-secondaryBg hover:shadow hover:shadow-ctaColor transition-all hover:transition-all'>
-              <p>My Adverts</p>
+              <p>My Pet Adverts</p>
             </Link>
             <Link
               href={'#'}

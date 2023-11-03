@@ -10,8 +10,9 @@ import { useRouter } from 'next/navigation';
 import { apiAddress } from '../../../utils/variables';
 import { AiOutlineMail, AiOutlinePhone, AiOutlineUser } from 'react-icons/ai';
 import { BiShow, BiHide } from 'react-icons/bi';
-import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import { signIn } from 'next-auth/react';
 
 const Register = () => {
   const router = useRouter();
@@ -71,10 +72,12 @@ const Register = () => {
   };
 
   return (
-    <main className='min-h-[75vh] rounded-lg shadow-md text-center pb-12 mt-28 my-8 px-3 m-3 flex items-center dark:bg-secondaryBg md:mx-14 md:px-16 lg:mx-32'>
+    <main className='min-h-[calc(100vh-30rem)] md:min-h-[calc(100vh-15rem)]min-h-[75vh] rounded-lg shadow-md text-center pb-12 mt-28 my-8 px-3 m-3 flex items-center dark:bg-secondaryBg md:mx-14 md:px-16 lg:mx-32'>
       <div className='flex gap-11 flex-col w-full m-auto max-w-sm'>
         <h2 className='text-secondary text-4xl font-medium mt-8'>Register</h2>
-        <button className='flex gap-4 px-5 py-2 border rounded-xl w-max m-auto items-center'>
+        <button
+          className='flex gap-4 px-5 py-2 border rounded-xl w-max m-auto items-center'
+          onClick={() => signIn('github')}>
           <svg
             stroke='currentColor'
             fill='currentColor'
@@ -132,16 +135,15 @@ const Register = () => {
               <AiOutlinePhone />
             </span>
             <Controller
-              {...register('phone')}
+              name='phone'
               control={control}
-              rules={{ validate: (value) => isValidPhoneNumber(value) }}
-              render={({ field: { onChange, value } }) => (
+              // rules={{ validate: (value) => isValidPhoneNumber(value) }}
+              render={({ field }) => (
                 <PhoneInput
-                  onChange={onChange}
-                  value={value}
                   defaultCountry='NG'
                   className='gap-2'
                   id='phone'
+                  {...field}
                 />
               )}
             />
