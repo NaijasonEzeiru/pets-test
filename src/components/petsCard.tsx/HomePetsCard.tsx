@@ -25,7 +25,11 @@ async function fetchPets() {
   }
 }
 
-// export const GET = async (request: Request, { nextUrl }: { nextUrl: any }) => {
+// export const fetchPets = async (
+//   request: Request,
+//   { nextUrl }: { nextUrl: any }
+// ) => {
+//   'use server';
 //   console.log(request);
 //   const q = nextUrl.searchParams.get('q');
 //   console.log({ q });
