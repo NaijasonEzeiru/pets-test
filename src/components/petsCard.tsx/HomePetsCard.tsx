@@ -1,18 +1,28 @@
 import { PetSchemaType } from '@/utils/schemas';
 import VerticalProductCard from './VerticalPetsCard';
-import { apiAddress } from '@/utils/variables';
 import { NextResponse } from 'next/server';
 import { db } from '@/db/db';
 import { ilike, or } from 'drizzle-orm';
 import { pets } from '@/db/schema/schema';
 
-async function fetchPets() {
+async function fetchPets(q: string | null) {
   'use server';
   try {
-    const allPets = await db.query.pets.findMany({ limit: 60 });
+    const allPets = !q
+      ? await db.query.pets.findMany({ limit: 60 })
+      : await db.query.pets.findMany({
+          where: or(
+            ilike(pets.breed, `%${q}%`),
+            ilike(pets.purebred, `%${q}%`),
+            ilike(pets.age, `%${q}%`),
+            ilike(pets.gender, `%${q}%`),
+            ilike(pets.category, `%${q}%`)
+          ),
+          limit: 60
+        });
     if (!allPets)
       return new NextResponse(JSON.stringify({ message: 'No pet found' }), {
-        status: 400
+        status: 401
       });
     return new NextResponse(JSON.stringify(allPets), { status: 201 });
   } catch (err) {
@@ -25,42 +35,6 @@ async function fetchPets() {
   }
 }
 
-// export const fetchPets = async (
-//   request: Request,
-//   { nextUrl }: { nextUrl: any }
-// ) => {
-//   'use server';
-//   console.log(request);
-//   const q = nextUrl.searchParams.get('q');
-//   console.log({ q });
-//   try {
-//     const allPets = !q
-//       ? await db.query.pets.findMany({ limit: 60 })
-//       : await db.query.pets.findMany({
-//           where: or(
-//             ilike(pets.breed, `%${q}%`),
-//             ilike(pets.purebred, `%${q}%`),
-//             ilike(pets.age, `%${q}%`),
-//             ilike(pets.gender, `%${q}%`),
-//             ilike(pets.category, `%${q}%`)
-//           ),
-//           limit: 60
-//         });
-//     if (!allPets)
-//       return new NextResponse(JSON.stringify({ message: 'No pet found' }), {
-//         status: 401
-//       });
-//     return new NextResponse(JSON.stringify(allPets), { status: 201 });
-//   } catch (err) {
-//     return new NextResponse(
-//       JSON.stringify({ err, message: 'Something went wrong' }),
-//       {
-//         status: 500
-//       }
-//     );
-//   }
-// };
-
 const HomePetsCard = async ({ query }: { query: string | null }) => {
   // const data = query
   //   ? await fetch(`${apiAddress}/api/pets?q=${query}`, {
@@ -70,7 +44,7 @@ const HomePetsCard = async ({ query }: { query: string | null }) => {
   //       cache: 'no-store'
   //     });
 
-  const v = await fetchPets();
+  const v = await fetchPets(query);
   const pets: PetSchemaType[] = await v.json();
   console.log(pets);
 

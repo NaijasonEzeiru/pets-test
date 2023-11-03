@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { ImSpinner } from 'react-icons/im';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineMail } from 'react-icons/ai';
 import { BiShow, BiHide } from 'react-icons/bi';
 import { signIn } from 'next-auth/react';
@@ -16,6 +16,9 @@ const Login = () => {
 
   const router = useRouter();
   const [showPassword, setShowPassWord] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+  console.log({ callbackUrl });
 
   //   useEffect(() => {
   //     // TODO: Display "You are already logged in"
@@ -60,10 +63,13 @@ const Login = () => {
   // };
 
   const logIn = async ({ email, password }: LoginSchemaType) => {
+    console.log({ callbackUrl });
     await signIn('credentials', { redirect: false, email, password })
       .then((res) => {
         if (res?.ok) {
-          router.push('/?alert=Log in successful');
+          callbackUrl
+            ? router.push(callbackUrl)
+            : router.push('/?alert=Log in successful');
         } else {
           alert('invalid login details');
         }

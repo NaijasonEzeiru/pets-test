@@ -85,7 +85,7 @@ input:-webkit-autofill:focus {
   grid-auto-rows: 1fr;
 }
 
-.grd {
+.grdLine {
   background-image: linear-gradient(90deg, rgba(233, 237, 241, 0) 35%);
 }
 
