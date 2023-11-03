@@ -23,7 +23,7 @@ export const GET = async (request: Request, { nextUrl }: { nextUrl: any }) => {
         });
     if (!allPets)
       return new NextResponse(JSON.stringify({ message: 'No pet found' }), {
-        status: 400
+        status: 401
       });
     return new NextResponse(JSON.stringify(allPets), { status: 201 });
   } catch (err) {
