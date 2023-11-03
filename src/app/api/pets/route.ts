@@ -4,11 +4,8 @@ import { db } from '@/db/db';
 import { pets, users, categories } from '@/db/schema/schema';
 import { eq, ilike, or } from 'drizzle-orm';
 
-export const GET = async ({
-  nextUrl
-}: {
-  nextUrl: { searchParams: { get: (w: string) => string } };
-}) => {
+export const GET = async (request: Request, { nextUrl }: { nextUrl: any }) => {
+  console.log(request);
   const q = nextUrl.searchParams.get('q');
   console.log({ q });
   try {
