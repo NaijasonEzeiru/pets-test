@@ -156,7 +156,7 @@ const Login = () => {
           <Link
             href='/auth/register'
             className='text-secondary ml-2 px-2 rounded-md border'>
-            Log in
+            Sign up
           </Link>
         </p>
       </div>
