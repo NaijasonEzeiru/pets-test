@@ -16,10 +16,9 @@
 
 //   const session = await getToken({
 //     req,
-//     secret: process.env.NEXTAUTH_SECRET,
+// secret: process.env.NEXTAUTH_SECRET,
 //     cookieName: 'next-auth.session-token'
 //   });
-
 //   console.log({ session });
 
 //   const isProtected = path.includes('/dashboard') || path === '/pet/new-pet';
