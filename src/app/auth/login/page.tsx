@@ -17,8 +17,7 @@ const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassWord] = useState(false);
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
-  console.log({ callbackUrl });
+  // const callbackUrl = searchParams.get('callbackUrl');
 
   //   useEffect(() => {
   //     // TODO: Display "You are already logged in"
@@ -63,13 +62,12 @@ const Login = () => {
   // };
 
   const logIn = async ({ email, password }: LoginSchemaType) => {
-    console.log({ callbackUrl });
     await signIn('credentials', { redirect: false, email, password })
       .then((res) => {
         if (res?.ok) {
-          callbackUrl
-            ? router.push(callbackUrl)
-            : router.push('/?alert=Log in successful');
+          // callbackUrl
+          //   ? router.push(callbackUrl)
+          router.push('/?alert=Log in successful');
         } else {
           alert('invalid login details');
         }
