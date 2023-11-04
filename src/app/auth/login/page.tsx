@@ -148,7 +148,7 @@ const Login = () => {
               }`}>
               <ImSpinner />
             </span>
-            <p className={`${isSubmitting && 'opacity-40'}`}>Sign Up</p>
+            <p className={`${isSubmitting && 'opacity-40'}`}>Log In</p>
           </button>
         </form>
         <p className='text-sm'>
