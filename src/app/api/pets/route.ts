@@ -6,7 +6,7 @@ import { eq, ilike, or } from 'drizzle-orm';
 
 export const GET = async (request: Request, { nextUrl }: { nextUrl: any }) => {
   console.log(request);
-  const q = nextUrl.searchParams.get('q');
+  const q = nextUrl?.searchParams?.get('q') || null;
   console.log({ q });
   try {
     const allPets = !q
