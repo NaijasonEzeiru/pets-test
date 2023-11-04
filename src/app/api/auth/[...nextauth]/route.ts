@@ -74,6 +74,10 @@ const handler = NextAuth({
     maxAge: 30 * 24 * 60 * 60 // 30 days
   },
   debug: process.env.NODE_ENV === 'development',
+  // pages: {
+  //   signIn: '/auth/login',
+  //   error: '/auth/login'
+  // },
   callbacks: {
     // jwt({ token, account, user }) {
     //   if (account) {

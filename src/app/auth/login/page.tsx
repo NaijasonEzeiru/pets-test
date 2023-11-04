@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { ImSpinner } from 'react-icons/im';
@@ -10,20 +10,28 @@ import { AiOutlineMail } from 'react-icons/ai';
 import { BiShow, BiHide } from 'react-icons/bi';
 import { signIn } from 'next-auth/react';
 import { LoginSchema, LoginSchemaType } from '../../../utils/schemas';
+import { NextPage } from 'next';
+import { Provider } from 'next-auth/providers/index';
 
-const Login = () => {
+type Props = {
+  providers: Provider[];
+};
+
+const Login: NextPage<Props> = ({ providers }) => {
   //   const { user, authChecking }: any = useContext(AuthContext);
 
   const router = useRouter();
   const [showPassword, setShowPassWord] = useState(false);
+  const [authCallbackUrl, setAuthCallbackUrl] = useState<string | undefined>(
+    undefined
+  );
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   console.log({ callbackUrl });
 
-  //   useEffect(() => {
-  //     // TODO: Display "You are already logged in"
-  //     user && router.push('/');
-  //   }, [user]);
+  // useEffect(() => {
+
+  // }, []);
 
   const {
     register,
