@@ -16,7 +16,7 @@ import { apiAddress } from '@/utils/variables';
 
 const AddPets = () => {
   const router = useRouter();
-  const auth = useSession();
+  const auth: any = useSession();
 
   const {
     register,
@@ -121,7 +121,7 @@ const AddPets = () => {
         petName,
         purebred,
         state: places[state].name,
-        userEmail: auth.data?.user?.email
+        userId: auth.data?.user?.id
       })
     });
     const response = await res.json();

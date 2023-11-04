@@ -50,23 +50,10 @@ export const POST = async (request: Request, res: Response) => {
     petName,
     purebred,
     state,
-    userEmail
+    userId
   } = PetSchema.parse(await request.json());
   console.log('passed val');
   try {
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, userEmail));
-    if (!user) {
-      return new NextResponse(
-        JSON.stringify({ message: 'Invalid user credential' }),
-        {
-          status: 401
-        }
-      );
-    }
-    console.log(user.id);
     let [pet] = await db
       .insert(pets)
       .values({
@@ -81,7 +68,7 @@ export const POST = async (request: Request, res: Response) => {
         purebred,
         state,
         category,
-        userId: user.id
+        userId: userId!
       })
       .returning();
     if (pet) {

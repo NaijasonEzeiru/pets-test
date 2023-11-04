@@ -101,9 +101,9 @@ const Login = () => {
           <p>Log in with Github</p>
         </button>
         <div className='flex w-full justify-center items-center'>
-          <div className='h-[1px] mx-3 flex-1 grd'></div>
+          <div className='h-[1px] mx-3 flex-1 grdLine'></div>
           <p>OR</p>
-          <div className='h-[1px] mx-3 flex-1 rotate-180 grd'></div>
+          <div className='h-[1px] mx-3 flex-1 rotate-180 grdLine'></div>
         </div>
         <form
           onSubmit={handleSubmit(logIn)}
@@ -156,7 +156,7 @@ const Login = () => {
           <Link
             href='/auth/register'
             className='text-secondary ml-2 px-2 rounded-md border'>
-            Sign Up
+            Log in
           </Link>
         </p>
       </div>

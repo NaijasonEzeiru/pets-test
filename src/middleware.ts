@@ -1,163 +1,58 @@
+// import { getToken } from 'next-auth/jwt';
 // import { NextRequest, NextResponse } from 'next/server';
-// import default from "next-auth/middleware"
-// import { getErrorResponse } from './helpers/errorResponse';
-// import { verifyJWT } from './helpers/token';
+// import { getServerSession } from 'next-auth/next';
+// import { options } from './app/api/auth/[...nextauth]/options';
 
-// interface AuthenticatedRequest extends NextRequest {
-//   user: { is_admin: boolean };
-// }
-
-// let redirectToLogin = false;
-
-// export async function middleware(req: NextRequest) {
-//   const token = req.cookies.get('access_token')?.value;
+// export default async function middleware(req: NextRequest) {
 //   const path = req.nextUrl.pathname;
 
-//   if (!token) {
-//     if (path.startsWith('/login') || path.startsWith('/register')) {
-//       return NextResponse.next();
-//     }
-//     if (path.startsWith('/api/admin') || path.startsWith('/api/auth/logout')) {
-//       return getErrorResponse(401, 'You are not logged in');
-//     }
-//     if (path.startsWith('/admin') || path.startsWith('/dashboard')) {
-//       return NextResponse.redirect(
-//         new URL(
-//           `/login?${new URLSearchParams({ message: 'Invalid credentials' })}`,
-//           req.url
-//         )
-//       );
-//     }
+//   if (path === '/') {
+//     return NextResponse.next();
 //   }
-//   const response = NextResponse.next();
 
-//   try {
-//     if (token) {
-//       const decodedToken = await verifyJWT<{
-//         account_no: number;
-//         is_admin: boolean;
-//       }>(token);
-//       console.log(token);
-//       const { is_admin }: any = decodedToken;
-//       //   response.headers.set('X-USER-ID', is_admin);
-//       //   (req as AuthenticatedRequest).user = decodedToken;
-//       if (!decodedToken.is_admin && path.startsWith('/admin')) {
-//         // TODO redirect to unauthorised page
-//         return NextResponse.redirect(
-//           new URL(
-//             `/login?${new URLSearchParams({
-//               message: 'Invalid admin credentials'
-//             })}`,
-//             req.url
-//           )
-//         );
-//       }
-//       if (!decodedToken.is_admin && path.startsWith('/api/admin')) {
-//         return getErrorResponse(403, 'You are not authorised for this action');
-//       }
-//       // if (decodedToken.is_admin && path.startsWith('/login')) {
-//       //   return NextResponse.redirect(new URL('/admin/users', req.url));
-//       // }
-//       // if (!decodedToken.is_admin && path.startsWith('/login')) {
-//       //   return NextResponse.redirect(new URL('/admin/users', req.url));
-//       // }
-//     }
-//   } catch (error) {
-//     console.log(error);
+//   console.log(req);
+//   //   const serve = await getServerSession(options);
+//   //   console.log({ serve });
 
-//     redirectToLogin = true;
-//     if (req.nextUrl.pathname.startsWith('api')) {
-//       return getErrorResponse(401, 'Token is invalid or user does not exists');
-//     }
-//     const response = NextResponse.redirect(
-//       new URL(
-//         `/login?${new URLSearchParams({ message: 'Invalid credentials' })}`,
-//         req.url
-//       )
-//     );
-//     response.cookies.set({
-//       name: 'access_token',
-//       value: '',
-//       httpOnly: true,
-//       path: '/',
-//       maxAge: -1
-//     });
-//     return response;
-//   }
-//   const authUser = (req as AuthenticatedRequest).user;
+//   const session = await getToken({
+//     req,
+//     secret: process.env.NEXTAUTH_SECRET,
+//     cookieName: 'next-auth.session-token'
+//   });
 
-//   if (
-//     req.nextUrl.pathname.startsWith('/login') ||
-//     (req.nextUrl.pathname.startsWith('/register') && authUser)
-//   ) {
+//   console.log({ session });
+
+//   const isProtected = path.includes('/dashboard') || path === '/pet/new-pet';
+
+//   if (!session && isProtected) {
 //     return NextResponse.redirect(
 //       new URL(
-//         `/?${new URLSearchParams({ message: 'You are already logged in' })}`,
+//         `/auth/login?alert=You are not logged in&callbackUrl=${path}`,
 //         req.url
 //       )
 //     );
+//   } else if (session && (path === '/auth/login' || path === '/auth/register')) {
+//     return NextResponse.redirect(
+//       new URL('/?alert=You are already logged in', req.url)
+//     );
 //   }
-//   return response;
+//   return NextResponse.next();
 // }
 
-// export const config = {
-//   matcher: [
-//     '/login',
-//     '/register',
-//     '/dashboard',
-//     '/dashboard/:path*',
-//     '/admin',
-//     '/admin/:path*',
-//     '/api/admin/:path*',
-//     '/api/auth/logout',
-//     '/api/admin'
-//   ]
-// };
+export { default } from 'next-auth/middleware';
 
-import { getToken } from 'next-auth/jwt';
-import { NextRequest, NextResponse } from 'next/server';
-
-export default async function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
-
-  if (path === '/') {
-    return NextResponse.next();
-  }
-
-  const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
-  console.log(session);
-
-  const isProtected = path.includes('/dashboard') || path === '/pet/new-pet';
-
-  if (!session && isProtected) {
-    return NextResponse.redirect(
-      new URL(
-        `/auth/login?alert=You are not logged in&callbackUrl=${path}`,
-        req.url
-      )
-    );
-  } else if (session && (path === '/auth/login' || path === '/auth/register')) {
-    return NextResponse.redirect(
-      new URL('/?alert=You are already logged in', req.url)
-    );
-  }
-  return NextResponse.next();
-}
-
-// export { default } from 'next-auth/middleware';
-
-// export const config = {
-//   matcher: [
-//     // '/login',
-//     // '/register',
-//     // '/dashboard',
-//     // '/dashboard/:path*',
-//     // '/admin',
-//     // '/admin/:path*',
-//     // '/api/admin/:path*',
-//     // '/api/auth/logout',
-//     '/api/admin',
-//     '/pet/new-pet'
-//   ]
-// };
+export const config = {
+  matcher: [
+    // '/login',
+    // '/register',
+    '/dashboard',
+    '/dashboard/:path*',
+    // '/dashboard/*',
+    // '/admin',
+    // '/admin/:path*',
+    // '/api/admin/:path*',
+    // '/api/auth/logout',
+    '/api/admin',
+    '/pet/new-pet'
+  ]
+};
